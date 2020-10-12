@@ -14,9 +14,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyListAdapter extends ArrayAdapter<Hero> {
@@ -24,20 +21,20 @@ public class MyListAdapter extends ArrayAdapter<Hero> {
     Context context;
     int resource;
 
-    public MyListAdapter(Context context, int resource, List<Hero> heroList) {
+    public MyListAdapter(Context context, int resource, List<Hero>
+            heroList) {
         super(context, resource, heroList);
         this.context = context;
         this.resource = resource;
         this.heroList = heroList;
     }
-
     @NonNull
+
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-
-        View view = layoutInflater.inflate(resource,null, false);
-
+        View view = layoutInflater.inflate(resource, null, false);
         ImageView imageView = view.findViewById(R.id.imageView);
         TextView textViewName = view.findViewById(R.id.textViewName);
         TextView textViewTeam = view.findViewById(R.id.textViewTeam);
@@ -55,28 +52,32 @@ public class MyListAdapter extends ArrayAdapter<Hero> {
                 removeHero(position);
             }
         });
-
         return view;
     }
 
     private void removeHero(final int position) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Are you sure want to delete this?");
+        builder.setTitle("Are you sure you want to delete this?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
                 heroList.remove(position);
+                notifyDataSetChanged();
             }
         });
 
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                //No Actions
             }
         });
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+
     }
 }
